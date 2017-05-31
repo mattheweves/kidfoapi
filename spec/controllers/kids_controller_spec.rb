@@ -23,6 +23,14 @@ RSpec.describe KidsController, type: :controller do
       expect(json[0]['birthdate'] < json[1]['birthdate']).to be false
     end
 
+    it "should return associated favorites to kid in response" do
+      kid = FactoryGirl.create :kid, :person_bryar
+      favorite = FactoryGirl.create(:favorite, kid_id: kid.id)
+      get :index
+      json = JSON.parse(response.body)
+      expect(json[0]['favorites'][0]['name']).to eq(favorite.name)
+    end
+
   end
 
   describe "kids#create action" do
@@ -62,11 +70,20 @@ RSpec.describe KidsController, type: :controller do
   end
 
   describe "kids#show action" do
+    before do
+      @kid = FactoryGirl.create :kid, :person_bryar
+    end
     it "should return a kid" do
-      kid = FactoryGirl.create :kid, :person_bryar
-      get :show, params: { id: kid.id }
+      get :show, params: { id: @kid.id }
       json = JSON.parse(response.body)
-      expect(json['id']).to eq(kid.id)
+      expect(json['id']).to eq(@kid.id)
+    end
+
+    it "should return associated favorites in response" do
+      favorite = FactoryGirl.create(:favorite, kid_id: @kid.id)
+      get :show, params: { id: @kid.id }
+      json = JSON.parse(response.body)
+      expect(json['favorites'][0]['name']).to eq(favorite.name)
     end
   end
 

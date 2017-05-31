@@ -1,7 +1,7 @@
 class KidsController < ApplicationController
   def index
     kids = Kid.order(name: :asc)
-    render json: kids
+    render json: kids.as_json(include: :favorites)
   end
 
   def create
@@ -15,7 +15,7 @@ class KidsController < ApplicationController
 
   def show
     kid = Kid.find(params[:id])
-    render json: kid
+    render json: kid.as_json(include: :favorites)
   end
 
   def update
