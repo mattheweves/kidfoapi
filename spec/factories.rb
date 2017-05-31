@@ -1,4 +1,7 @@
 FactoryGirl.define do
+  factory :user do
+    
+  end
   factory :favorite, class: Favorite do
     name "New Favorite"
   end
