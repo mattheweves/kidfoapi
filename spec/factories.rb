@@ -1,6 +1,12 @@
 FactoryGirl.define do
+  factory :family do
+    name "Eves"
+  end
   factory :user do
-    
+    first_name "User"
+    last_name "Last"
+    email "user@kidfo.com"
+    password "password123"
   end
   factory :favorite, class: Favorite do
     name "New Favorite"

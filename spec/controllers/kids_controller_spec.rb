@@ -91,7 +91,7 @@ RSpec.describe KidsController, type: :controller do
     before do
       @kid = FactoryGirl.create :kid, :person_bryar
     end
-    it "should receive the updated note in the response" do
+    it "should receive the updated kid in the response" do
       put :update, params: { id: @kid.id, kid: { allergies: 'Peas' } }
       json = JSON.parse(response.body)
       expect(json['allergies']).to eq('Peas')
