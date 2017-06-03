@@ -1,8 +1,8 @@
 class FamilyController < ApplicationController
 
   def create
-    myfamily = current_user.build_family
-    render status: :unprocessable_entity
+    myfamily = Family.create(:name => current_user.last_name)
+    current_user.update_attributes(:family_id => myfamily.id)
   end
 
   def update

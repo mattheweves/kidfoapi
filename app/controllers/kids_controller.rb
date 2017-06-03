@@ -1,7 +1,11 @@
 class KidsController < ApplicationController
   def index
     kids = Kid.order(name: :asc)
-    render json: kids.as_json(include: :favorites)
+    if kids.count > 0
+      render json: kids.as_json(include: :favorites)
+    else
+      render json: render_errors(kid), status: :unprocessable_entity
+    end
   end
 
   def create
