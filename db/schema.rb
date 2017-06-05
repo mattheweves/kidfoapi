@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20170531130845) do
 
   create_table "kids", force: :cascade do |t|
     t.string   "name"
-    t.date     "birthdate"
+    t.string   "birthdate"
     t.string   "gender"
     t.string   "insuranceprovider"
     t.string   "bedtime"

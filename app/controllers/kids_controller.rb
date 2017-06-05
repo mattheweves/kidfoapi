@@ -40,7 +40,7 @@ class KidsController < ApplicationController
   private
 
   def kid_params
-    params.require(:kid).permit(:name, :birthdate, :gender, :allergies, :nonos, :eatdetails, :sleeproutine)
+    params.require(:kid).permit(:name, :birthdate, :gender, :allergies, :nonos, :eatdetails, :sleeproutine, :bedtime)
   end
 
   def render_errors(kid)
