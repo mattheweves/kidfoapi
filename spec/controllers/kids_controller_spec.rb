@@ -2,7 +2,10 @@ require 'rails_helper'
 
 RSpec.describe KidsController, type: :controller do
   describe "kids#index action" do
+
     it "should successfully respond" do
+      FactoryGirl.create :kid, :person_bryar
+      FactoryGirl.create :kid, :person_goji
       get :index
       expect(response).to have_http_status(:success)
     end
