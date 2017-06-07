@@ -1,4 +1,7 @@
 FactoryGirl.define do
+  factory :invite do
+    
+  end
   factory :family do
     name "Eves"
   end
