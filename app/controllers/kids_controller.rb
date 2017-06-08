@@ -1,5 +1,6 @@
 class KidsController < ApplicationController
   def index
+    #byebug
     kids = Kid.order(name: :asc)
     if kids.count > 0
       render json: kids.as_json(include: :favorites)
