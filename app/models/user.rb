@@ -5,6 +5,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  belongs_to :family
+  has_many :kids, through: :family
 
   def build_family
     build_family(name: last_name) unless family.present?

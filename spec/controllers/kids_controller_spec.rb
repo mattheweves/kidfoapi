@@ -3,6 +3,11 @@ require 'rails_helper'
 RSpec.describe KidsController, type: :controller do
   describe "kids#index action" do
 
+    test "index with token authentication via query params" do
+      get :index, { user_email: "matt@kidfo.com", user_token: "1G8_s7P-V-4MGojaKD7a" }
+      assert_response :success
+    end
+
     it "should successfully respond" do
       FactoryGirl.create :kid, :person_bryar
       FactoryGirl.create :kid, :person_goji
