@@ -22,13 +22,15 @@ gem 'carrierwave'
 gem 'carrierwave-base64'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+#Invites
+gem 'aasm'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
 gem 'devise'
 gem 'simple_token_authentication', '~> 1.0' # see semver.org
- 
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

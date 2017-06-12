@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   #     # write all your routes inside this block
   #     devise_for :users, controllers: { registrations: 'users/registrations' }
   # end
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'users/registrations' }
 
   resource :sessions, only: [:create, :destroy, :show]
 
@@ -14,4 +14,13 @@ Rails.application.routes.draw do
     resources :favorites, only: [:create]
   end
   resources :favorites, only: [:destroy]
+
+  resources :invites do
+    member do
+      post :accept, to: 'invites#accept', as: :accept
+      post :cancel, to: 'invites#cancel', as: :cancel
+      post :reject, to: 'invites#reject', as: :reject
+    end
+  end
+
 end

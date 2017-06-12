@@ -1,16 +1,21 @@
 FactoryGirl.define do
-  factory :invite do
+  factory :family_sitter do
     
+  end
+  factory :invite do
+
   end
   factory :family do
     name "Eves"
   end
-  factory :user do
-    first_name "User"
-    last_name "Last"
-    email "user@kidfo.com"
-    password "password123"
+
+  factory :user do |user|
+    user.first_name                   "Test User"
+    user.email                  "user@example.com"
+    user.password               "password"
+    user.password_confirmation  "password"
   end
+
   factory :favorite, class: Favorite do
     name "New Favorite"
   end
