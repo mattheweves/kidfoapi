@@ -13,8 +13,9 @@ class User < ApplicationRecord
   has_many :invites
 
   #Sitters
-  has_many :family_sitters, foreign_key: :sitter_id
-  has_many :families, through: :family_sitters, source: :family
+  has_many :familysitters, foreign_key: :sitter_id
+  has_many :families, through: :familysitters, source: :family
+
 
   # Received Invitations
   # Receive Invitation from User A, We call it invitation

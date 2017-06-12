@@ -4,6 +4,7 @@ class Family < ApplicationRecord
   has_many :invites
   has_many :familysitters
   has_many :sitters, through: :familysitters
+
   alias parents users
 
   def may_invite_spouse?
