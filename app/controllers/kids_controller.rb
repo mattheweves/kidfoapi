@@ -20,11 +20,8 @@ class KidsController < ApplicationController
 
   def show
     @kid = Kid.find(params[:id])
-    if current_user.family.kids.find(params[:id])
-      render json: @kid.as_json(include: :favorites)
-    else
-      head :unauthorized
-    end
+    @family = @kid.family
+    render json: @kid.as_json(include: :favorites, include: :family)
   end
 
   def update

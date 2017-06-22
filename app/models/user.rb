@@ -24,17 +24,20 @@ class User < ApplicationRecord
                          class_name: 'Invite'
 
   enum role: {
-  # Person with Kids, Family, But Does not Sit for Others
-  parentuser: 1,
-  # Person who watches for families, but doesn't have family.
-  sitteruser: 2,
-  # Person with Kids, Family, also been invited to view/sit for other families.
-  parentsitteruser: 3
-
+    # Person with Kids, Family, But Does not Sit for Others
+    parentuser: 1,
+    # Person who watches for families, but doesn't have family.
+    sitteruser: 2,
+    # Person with Kids, Family, also been invited to view/sit for other families.
+    parentsitteruser: 3
   }
 
   def build_family
     build_family(name: last_name) unless family.present?
+  end
+
+  def set_role
+
   end
 
 end

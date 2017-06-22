@@ -1,12 +1,18 @@
 Rails.application.routes.draw do
 
-  # devise_scope :user do
-  #     # write all your routes inside this block
-  #     devise_for :users, controllers: { registrations: 'users/registrations' }
-  # end
-  devise_for :users, controllers: { registrations: 'users/registrations' }
-
+  devise_scope :user do
+      # write all your routes inside this block
+      devise_for :users, controllers: { registrations: 'users/registrations' }
+  end
+  # devise_for :users,
+  #   only: :registrations,
+  #   controllers: {
+  #     registrations: 'users/registrations'
+  #   }
+  #devise_for :users#, :controllers => {registrations: 'users'}
   resource :sessions, only: [:create, :destroy, :show]
+
+  #resources :users, only: [:create, :update, :destroy]
 
   resources :family
   resources :families, only: [:index, :show]

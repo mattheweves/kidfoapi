@@ -45,7 +45,7 @@ class InvitesController < ApplicationController
     @invite = Invite.find(params[:id])
     @invite.accept!
     if @invite.invite_kind = 'for_spouse'
-      if current_user.families.count > 0
+      if current_user.families.exists? && current_user.families.count > 0
          current_user.role = 'parentsitteruser'
       else current_user.role = 'parentuser'
       end

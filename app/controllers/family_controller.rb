@@ -18,6 +18,12 @@ class FamilyController < ApplicationController
   end
 
   def update
+    @family = current_user.family
+    if @family.update family_params
+      render json: @family.as_json(include: [:kids, :parents ])
+    else
+      render json: render_errors(@family), status: :unprocessable_entity
+    end
   end
 
   private
