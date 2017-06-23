@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   respond_to :json
-
   def create
     user = User.new(new_user_params)
         if user.save
@@ -11,6 +10,10 @@ class UsersController < ApplicationController
         end
   end
 
+  def show
+    sitter = User.find(params[:id])
+    render json: sitter.as_json
+  end
 
   private
 

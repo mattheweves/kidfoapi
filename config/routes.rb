@@ -5,13 +5,17 @@ Rails.application.routes.draw do
   #   controllers: {
   #     registrations: 'users/registrations'
   #   }
-#  devise_for :users, :controllers => {registrations: 'users/registrations'}
+  devise_for :users, :controllers => {registrations: 'users/registrations'}
   resource :sessions, only: [:create, :destroy, :show]
 
   resources :account, only: [:create, :update, :destroy]
 
+  #Care
+#  resources :users, only: [:show]
   resources :family
   resources :families, only: [:index, :show]
+  resources :sitters, only: [:index, :show]
+
 # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :kids do
     resources :favorites, only: [:create]
