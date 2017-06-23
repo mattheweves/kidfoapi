@@ -6,7 +6,7 @@ class InvitesController < ApplicationController
     @email = current_user.email
     @invites = Invite.where(email: @email).select { |invite| invite.status == 'pending' }
     if @invites
-      render json: @invites
+      render json: @invites.as_json(include: :family)
     else
       head :ok
     end
