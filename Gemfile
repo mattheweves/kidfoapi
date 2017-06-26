@@ -20,6 +20,10 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'carrierwave'
 gem 'carrierwave-base64'
+gem 'mime-types'
+gem 'fog'
+gem 'figaro'
+gem 'unf'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 #Invites
