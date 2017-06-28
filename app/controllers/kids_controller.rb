@@ -39,10 +39,10 @@ class KidsController < ApplicationController
     head :no_content
   end
 
-  def split_base64(uri_str)
+def split_base64(uri_str)
 		  if uri_str.match(%r{^data:(.*?);(.*?),(.*)$})
 		    uri = Hash.new
-		    uri[:type] = $1 # "picture/gif"
+		    uri[:type] = $1 # "image/gif"
 		    uri[:encoder] = $2 # "base64"
 		    uri[:data] = $3 # data string
 		    uri[:extension] = $1.split('/')[1] # "gif"
@@ -50,33 +50,33 @@ class KidsController < ApplicationController
 		  else
 		    return nil
 		  end
-    end
+end
 
-  def convert_data_uri_to_upload(obj_hash)
-  		  if obj_hash[:picture].try(:match, %r{^data:(.*?);(.*?),(.*)$})
-  		    picture_data = split_base64(obj_hash[:picture_url])
-  		    picture_data_string = picture_data[:data]
-  		    picture_data_binary = Base64.decode64(picture_data_string)
+def convert_data_uri_to_upload(obj_hash)
+		  if obj_hash[:image_url].try(:match, %r{^data:(.*?);(.*?),(.*)$})
+		    image_data = split_base64(obj_hash[:image_url])
+		    image_data_string = image_data[:data]
+		    image_data_binary = Base64.decode64(image_data_string)
 
-  		    temp_img_file = Tempfile.new("")
-  		    temp_img_file.binmode
-  		    temp_img_file << picture_data_binary
-  		    temp_img_file.rewind
+		    temp_img_file = Tempfile.new("")
+		    temp_img_file.binmode
+		    temp_img_file << image_data_binary
+		    temp_img_file.rewind
 
-  		    img_params = {:filename => "picture.#{picture_data[:extension]}", :type => picture_data[:type], :tempfile => temp_img_file}
-  		    uploaded_file = ActionDispatch::Http::UploadedFile.new(img_params)
+		    img_params = {:filename => "image.#{image_data[:extension]}", :type => image_data[:type], :tempfile => temp_img_file}
+		    uploaded_file = ActionDispatch::Http::UploadedFile.new(img_params)
 
-  		    obj_hash[:picture] = uploaded_file
-  		    obj_hash.delete(:picture_url)
-  		  end
-  	return obj_hash
-  end
+		    obj_hash[:image] = uploaded_file
+		    obj_hash.delete(:image_url)
+		  end
+	return obj_hash
+end
 
 
   private
 
   def kid_params
-    params.require(:kid).permit(:name, :birthdate, :gender, :allergies, :nonos, :eatdetails, :bedtime, :sleeproutine, :picture, :picture_url, :family_id)
+    params.require(:kid).permit(:name, :birthdate, :gender, :allergies, :nonos, :eatdetails, :bedtime, :sleeproutine, :image, :image_url, :family_id)
   end
 
   def render_errors(kid)

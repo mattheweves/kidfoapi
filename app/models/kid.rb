@@ -1,6 +1,6 @@
 class Kid < ApplicationRecord
-  mount_base64_uploader :picture, PictureUploader
-  #mount_uploader :picture, PictureUploader
+  mount_base64_uploader :image, ImageUploader
+
   has_many :favorites
   belongs_to :family
 
