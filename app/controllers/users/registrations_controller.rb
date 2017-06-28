@@ -1,6 +1,72 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  respond_to :json
-  def protect_against_forgery?
-    false
+
+  def create
+  	# check if there already user using the email
+    @params = params
+    email = @params[:email]
+  	if User.find_by_email(email)
+  		# stop this create block straight away and show error
+  		return render json: {status: "Error", message: "Email already taken"}
+  	end
+
+  	# if can't found user using the email, proceed by saving the user
+    user = User.new(user_params)
+    if user.save
+    	render json: user.as_json(only: [:id, :email, :authentication_token, :family_id])
+    else
+      render json: render_errors(user), status: :unprocessable_entity
+    end
   end
+
+  def update
+
+    respond_to do |format|
+      format.html {super}
+      format.json {
+        # also required X-USER-EMAIL and X-USER-TOKEN inside the headers
+        email = request.headers["X-USER-EMAIL"]
+        user  = User.find_by_email(email)
+
+        # if want to check user current_password, use this:
+        # http://stackoverflow.com/a/4370106/1577357
+
+        if params[:user][:password] == params[:user][:password_confirmation]
+          if user.update(password: params[:user][:password])
+            destroy_all_token(user)
+            render json: {status: "Success", message: "Password changed"}
+          else
+            render json: {status: "Error", message: "Password not changed"}
+          end
+        else
+          render json: {status: "Error", message: "Password not matched"}
+        end
+      }
+    end
+
+  end
+
+  private
+
+    def render_errors(user)
+      { errors: user.errors }
+    end
+
+  	def user_params
+      params.permit(:email, :first_name, :last_name, :password, :password_confirmation)
+    end
+
+    # every time after user change password, destroy all user's token(s)
+    # why not make this as after_update callback in User model?
+    # because `Tiddle.expire_token(...) method` inside sessions_controller
+    # also trigger this method if we make this method as after_update callback
+    # when user sign out (destroy session) in HTML,
+    # we don't want to delete his/her token. we only want to delete his/her token
+    # after he/she change his/her password
+    def destroy_all_token(user)
+      user.authentication_tokens.destroy_all
+      # in JS app, we must sign out the user after they change their password
+      # and show a notice saying their `password has been changed successfully`
+      # after they log in again, they will get a new token
+    end
+
 end
