@@ -76,7 +76,7 @@ end
   private
 
   def kid_params
-    params.require(:kid).permit(:name, :birthdate, :gender, :allergies, :nonos, :eatdetails, :bedtime, :sleeproutine, :image, :image_url, :family_id)
+    params.permit(:name, :birthdate, :gender, :allergies, :nonos, :eatdetails, :bedtime, :sleeproutine, :image, :image_url, :family_id)
   end
 
   def render_errors(kid)
