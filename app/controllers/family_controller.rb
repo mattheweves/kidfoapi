@@ -1,4 +1,5 @@
 class FamilyController < ApplicationController
+  include Base64Handler
 
   def create
     family = Family.create(family_params)#(:name => current_user.last_name)
@@ -29,7 +30,7 @@ class FamilyController < ApplicationController
   private
 
   def family_params
-    params.require(:family).permit(:name, :avatar, :physicianname, :physicianphone, :insuranceprovider, :health_ins_enrollee_id, :health_ins_group_num, :emerg_contact_1, :emerg_contact_1_phone, :emerg_contact_2, :emerg_contact_2_phone)
+    params.require(:family).permit(:name, :image, :physicianname, :physicianphone, :insuranceprovider, :health_ins_enrollee_id, :health_ins_group_num, :emerg_contact_1, :emerg_contact_1_phone, :emerg_contact_2, :emerg_contact_2_phone)
   end
 
 end

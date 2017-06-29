@@ -1,4 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  include Base64Handler
 
   def create
   	# check if there already user using the email

@@ -1,27 +1,21 @@
 Rails.application.routes.draw do
 
-  #devise_for :users #,
-  #   only: :registrations,
-  #   controllers: {
-  #     registrations: 'users/registrations'
-  #   }
   devise_for :users, :controllers => {registrations: 'users/registrations'}
   resource :sessions, only: [:create, :destroy, :show]
-
-  resources :account, only: [:create, :update, :destroy]
-
+  
   #Care
-#  resources :users, only: [:show]
   resources :family
   resources :families, only: [:index, :show]
   resources :sitters, only: [:index, :show]
 
-# For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  #Kids
   resources :kids do
     resources :favorites, only: [:create]
   end
+  #Kids - can destroy without Kid Id
   resources :favorites, only: [:destroy]
 
+  #Invites: Can be to Sitter or Spouse
   resources :invites do
     member do
       post :accept, to: 'invites#accept', as: :accept

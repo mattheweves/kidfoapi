@@ -1,4 +1,6 @@
 class Family < ApplicationRecord
+  mount_base64_uploader :image, ImageUploader
+
   has_many :users
   has_many :kids
   has_many :invites
