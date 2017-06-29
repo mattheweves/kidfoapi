@@ -8,11 +8,9 @@ class FamilyController < ApplicationController
     else
       render json: render_errors(family), status: :unprocessable_entity
     end
-    #current_user.update_attributes(:family_id => myfamily.id)
   end
 
   def show
-    #family = Family.find(params[:id]).kids
     family = Family.find(params[:id])
     render json: family.as_json(include: [:kids, :parents ])
 
@@ -20,7 +18,7 @@ class FamilyController < ApplicationController
 
   def update
     @family = current_user.family
-    if @family.update family_params
+    if @family.update_attributes(convert_data_uri_to_upload(family_params))
       render json: @family.as_json(include: [:kids, :parents ])
     else
       render json: render_errors(@family), status: :unprocessable_entity
@@ -30,7 +28,7 @@ class FamilyController < ApplicationController
   private
 
   def family_params
-    params.require(:family).permit(:name, :image, :physicianname, :physicianphone, :insuranceprovider, :health_ins_enrollee_id, :health_ins_group_num, :emerg_contact_1, :emerg_contact_1_phone, :emerg_contact_2, :emerg_contact_2_phone)
+    params.permit(:name, :image, :image_url, :physicianname, :physicianphone, :insuranceprovider, :health_ins_enrollee_id, :health_ins_group_num, :emerg_contact_1, :emerg_contact_1_phone, :emerg_contact_2, :emerg_contact_2_phone)
   end
 
 end
