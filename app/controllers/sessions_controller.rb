@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     @user = User.where(email: params[:email]).first
     if @user&.valid_password?(params[:password])
       @user.save
-      render json: @user.as_json(only: [:id, :email, :authentication_token, :family_id]), status: :created
+      render json: @user.as_json(only: [:id, :first_name, :last_name, :email, :image, :authentication_token, :family_id]), status: :created
     else
       head(:unauthorized)
     end

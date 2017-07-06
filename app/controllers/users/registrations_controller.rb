@@ -13,6 +13,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   	# if can't found user using the email, proceed by saving the user
     user = User.new(user_params)
     if user.save
+      user.role = "sitteruser"
     	render json: user.as_json(only: [:id, :email, :authentication_token, :family_id])
     else
       render json: render_errors(user), status: :unprocessable_entity
@@ -20,28 +21,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def update
-
-    respond_to do |format|
-      format.html {super}
-      format.json {
-        # also required X-USER-EMAIL and X-USER-TOKEN inside the headers
-        email = request.headers["X-USER-EMAIL"]
-        user  = User.find_by_email(email)
-
-        # if want to check user current_password, use this:
-        # http://stackoverflow.com/a/4370106/1577357
-
-        if params[:user][:password] == params[:user][:password_confirmation]
-          if user.update(password: params[:user][:password])
-            destroy_all_token(user)
-            render json: {status: "Success", message: "Password changed"}
-          else
-            render json: {status: "Error", message: "Password not changed"}
-          end
-        else
-          render json: {status: "Error", message: "Password not matched"}
-        end
-      }
+    @user = current_user
+    if @user.update_attributes(convert_data_uri_to_upload(user_params))
+      render json: @user, status: :ok
+    else
+      render json: render_errors(@user), status: :unprocessable_entity
     end
 
   end
@@ -53,7 +37,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
 
   	def user_params
-      params.permit(:email, :first_name, :last_name, :password, :password_confirmation)
+      params.permit(:email, :phone_number, :image, :image_url, :first_name, :last_name, :password, :password_confirmation)
     end
 
     # every time after user change password, destroy all user's token(s)

@@ -4,7 +4,7 @@ class KidsController < ApplicationController
   def index
     @kids = current_user.family.kids
     if @kids.count > 0
-      render json: @kids.as_json(include: :favorites)
+      render json: @kids.as_json(include: :favorites, include: :family)
     else
       render json: render_errors(kid), status: :unprocessable_entity
     end

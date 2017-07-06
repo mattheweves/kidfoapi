@@ -2,18 +2,26 @@ class FamilyController < ApplicationController
   include Base64Handler
 
   def create
-    family = Family.create(family_params)#(:name => current_user.last_name)
-    if family.valid?
-      render json: family, status: :created
+    user = current_user
+    familyname = user.last_name
+    if current_user && current_user.family_id?
+      head(:unauthorized)
     else
-      render json: render_errors(family), status: :unprocessable_entity
+      familyname = current_user.last_name
+      family = Family.create(:name => familyname)
+      if family.valid?
+        current_user.update_attributes(:family_id => family.id)
+        render json: family, status: :created
+      else
+        render json: render_errors(family), status: :unprocessable_entity
+      end
     end
+
   end
 
   def show
     family = Family.find(params[:id])
     render json: family.as_json(include: [:kids, :parents ])
-
   end
 
   def update

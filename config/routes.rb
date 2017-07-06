@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
 
+  #User
   devise_for :users, :controllers => {registrations: 'users/registrations'}
   resource :sessions, only: [:create, :destroy, :show]
-  
+  resource :accounts, only: [:show, :update]
+
   #Care
   resources :family
   resources :families, only: [:index, :show]
