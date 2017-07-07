@@ -30,7 +30,7 @@ class AccountsController < ApplicationController
     end
 
   	def user_params
-      params.permit(:email, :image, :image_url, :first_name, :last_name, :phone_number, :password, :password_confirmation)
+      params.permit(:email, :image, :motto, :image_url, :first_name, :last_name, :phone_number, :password, :password_confirmation)
     end
 
 end

@@ -37,7 +37,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
 
   	def user_params
-      params.permit(:email, :phone_number, :image, :image_url, :first_name, :last_name, :password, :password_confirmation)
+      params.permit(:email, :motto, :phone_number, :image, :image_url, :first_name, :last_name, :password, :password_confirmation)
     end
 
     # every time after user change password, destroy all user's token(s)
