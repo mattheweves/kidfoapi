@@ -6,7 +6,7 @@ class KidsController < ApplicationController
     if @kids.count > 0
       render json: @kids.as_json(include: :favorites, include: :family)
     else
-      render json: render_errors(kid), status: :unprocessable_entity
+      render json: render_errors(@kids), status: :unprocessable_entity
     end
   end
 
