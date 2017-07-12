@@ -293,6 +293,9 @@ GEM
       rspec-mocks (~> 3.6.0)
       rspec-support (~> 3.6.0)
     rspec-support (3.6.0)
+    seed_dump (3.2.4)
+      activerecord (>= 4)
+      activesupport (>= 4)
     simple_token_authentication (1.15.1)
       actionmailer (>= 3.2.6, < 6)
       actionpack (>= 3.2.6, < 6)
@@ -344,6 +347,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 5.0.3)
   rspec-rails (~> 3.5)
+  seed_dump
   simple_token_authentication (~> 1.0)
   spring
   spring-watcher-listen (~> 2.0.0)

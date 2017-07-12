@@ -24,6 +24,7 @@ gem 'mime-types'
 gem 'fog'
 gem 'figaro'
 gem 'unf'
+gem 'seed_dump'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 #Invites
