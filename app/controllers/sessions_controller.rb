@@ -9,8 +9,10 @@ class SessionsController < ApplicationController
     if @user&.valid_password?(params[:password])
       @user.save
       render json: @user.as_json(only: [:id, :first_name, :last_name, :email, :image, :authentication_token, :family_id]), status: :created
-    else
+    elsif @user
       head(:unauthorized)
+    else
+      head(:not_found)
     end
   end
 
